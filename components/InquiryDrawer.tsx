@@ -1,7 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -11,147 +17,169 @@ interface InquiryDrawerProps {
   onOpenChange: (open: boolean) => void
 }
 
-const serviceTypes = ['Dnevni Obedi', 'Korporativna Slavlja', 'Koktel / Prezentacija']
-const capacityOptions = ['Do 50', '50 – 150', '150+']
+const serviceTypes = ['Dnevni Obedi', 'Korporativna Proslava', 'Koktel / Prezentacija']
+const volumeOptions = ['Do 50', '50 – 150', '150+']
+
+const emptyForm = {
+  name: '',
+  company: '',
+  phone: '',
+  serviceType: '',
+  volume: '',
+}
 
 export default function InquiryDrawer({ open, onOpenChange }: InquiryDrawerProps) {
-  const [formData, setFormData] = useState({
-    contactPerson: '',
-    company: '',
-    email: '',
-    serviceType: '',
-    capacity: '',
-  })
+  const [formData, setFormData] = useState(emptyForm)
   const [submitted, setSubmitted] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
     setSubmitted(true)
     setTimeout(() => {
       setSubmitted(false)
       onOpenChange(false)
-      setFormData({ contactPerson: '', company: '', email: '', serviceType: '', capacity: '' })
-    }, 2000)
+      setFormData(emptyForm)
+    }, 2500)
   }
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:w-96">
-        <SheetHeader className="mb-6">
-          <SheetTitle className="text-2xl text-primary">Zahtevaj Ponudu</SheetTitle>
-          <SheetDescription>
-            Popuni formu ispod i naš tim će ti se javiti u roku od 24 sata
-          </SheetDescription>
-        </SheetHeader>
-
+      <SheetContent
+        side="right"
+        className="w-full sm:w-[420px] border-l border-[#E8E4DF] bg-[#FAFAF9] p-0"
+      >
         {submitted ? (
-          <div className="flex h-96 flex-col items-center justify-center gap-4">
-            <div className="text-5xl">✓</div>
-            <h3 className="text-lg font-semibold text-primary">Hvala!</h3>
-            <p className="text-center text-sm text-foreground/70">
-              Tvoj zahtev je primljen. Uskoro ćemo te kontaktirati.
+          <div className="flex h-full flex-col items-center justify-center gap-5 px-10 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#1C1917]">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 13l4 4L19 7" stroke="#FAFAF9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <h3 className="font-heading text-xl font-semibold text-[#1C1917]">Zahtev primljen</h3>
+            <p className="text-sm leading-relaxed text-[#78716C]">
+              Naš tim će vas kontaktirati u roku od 24 sata radnim danima.
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            {/* Contact Person */}
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="contactPerson" className="font-medium text-foreground">
-                Ime osobe za kontakt
-              </Label>
-              <Input
-                id="contactPerson"
-                placeholder="npr. Marko Marković"
-                value={formData.contactPerson}
-                onChange={(e) =>
-                  setFormData({ ...formData, contactPerson: e.target.value })
-                }
-                required
-                className="border-border bg-background"
-              />
+          <div className="flex h-full flex-col">
+            {/* Header */}
+            <div className="border-b border-[#E8E4DF] px-8 py-7">
+              <SheetHeader>
+                <SheetTitle className="font-heading text-2xl font-bold text-[#1C1917]">
+                  Inicirajte Sastanak
+                </SheetTitle>
+                <SheetDescription className="text-sm leading-relaxed text-[#78716C]">
+                  Popunite formu ispod. Naš tim će vas kontaktirati u roku od 24 sata.
+                </SheetDescription>
+              </SheetHeader>
             </div>
 
-            {/* Company */}
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="company" className="font-medium text-foreground">
-                Naziv Kompanije
-              </Label>
-              <Input
-                id="company"
-                placeholder="npr. TechCorp d.o.o."
-                value={formData.company}
-                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                required
-                className="border-border bg-background"
-              />
-            </div>
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="flex flex-1 flex-col gap-0 overflow-y-auto">
+              <div className="flex flex-col gap-6 px-8 py-8">
+                {/* Name */}
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="name" className="text-xs font-semibold uppercase tracking-wider text-[#78716C]">
+                    Ime i prezime
+                  </Label>
+                  <Input
+                    id="name"
+                    placeholder="npr. Marko Marković"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    required
+                    className="rounded-lg border-[#D6CFC8] bg-white text-[#1C1917] placeholder:text-[#A8A29E] focus-visible:ring-[#1C1917]"
+                  />
+                </div>
 
-            {/* Email / Phone */}
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="email" className="font-medium text-foreground">
-                Email ili Telefon
-              </Label>
-              <Input
-                id="email"
-                placeholder="marko@techcorp.rs ili +381 60 123 4567"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-                className="border-border bg-background"
-              />
-            </div>
+                {/* Company */}
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="company" className="text-xs font-semibold uppercase tracking-wider text-[#78716C]">
+                    Naziv kompanije
+                  </Label>
+                  <Input
+                    id="company"
+                    placeholder="npr. TechCorp d.o.o."
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    required
+                    className="rounded-lg border-[#D6CFC8] bg-white text-[#1C1917] placeholder:text-[#A8A29E] focus-visible:ring-[#1C1917]"
+                  />
+                </div>
 
-            {/* Service Type Pills */}
-            <div className="flex flex-col gap-3">
-              <Label className="font-medium text-foreground">Tip Usluge</Label>
-              <div className="flex flex-wrap gap-2">
-                {serviceTypes.map((type) => (
-                  <button
-                    key={type}
-                    type="button"
-                    onClick={() => setFormData({ ...formData, serviceType: type })}
-                    className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
-                      formData.serviceType === type
-                        ? 'bg-accent text-accent-foreground'
-                        : 'border border-border bg-background text-foreground hover:border-accent'
-                    }`}
-                  >
-                    {type}
-                  </button>
-                ))}
+                {/* Phone */}
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="phone" className="text-xs font-semibold uppercase tracking-wider text-[#78716C]">
+                    Kontakt telefon
+                  </Label>
+                  <Input
+                    id="phone"
+                    placeholder="+381 60 123 4567"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    required
+                    className="rounded-lg border-[#D6CFC8] bg-white text-[#1C1917] placeholder:text-[#A8A29E] focus-visible:ring-[#1C1917]"
+                  />
+                </div>
+
+                {/* Service type */}
+                <div className="flex flex-col gap-3">
+                  <Label className="text-xs font-semibold uppercase tracking-wider text-[#78716C]">
+                    Tip događaja
+                  </Label>
+                  <div className="flex flex-wrap gap-2">
+                    {serviceTypes.map((type) => (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => setFormData({ ...formData, serviceType: type })}
+                        className={`rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 ${
+                          formData.serviceType === type
+                            ? 'bg-[#1C1917] text-[#FAFAF9]'
+                            : 'border border-[#D6CFC8] bg-white text-[#57534E] hover:border-[#1C1917]'
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Volume */}
+                <div className="flex flex-col gap-3">
+                  <Label className="text-xs font-semibold uppercase tracking-wider text-[#78716C]">
+                    Volumen (broj osoba)
+                  </Label>
+                  <div className="flex flex-wrap gap-2">
+                    {volumeOptions.map((vol) => (
+                      <button
+                        key={vol}
+                        type="button"
+                        onClick={() => setFormData({ ...formData, volume: vol })}
+                        className={`rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 ${
+                          formData.volume === vol
+                            ? 'bg-[#1C1917] text-[#FAFAF9]'
+                            : 'border border-[#D6CFC8] bg-white text-[#57534E] hover:border-[#1C1917]'
+                        }`}
+                      >
+                        {vol}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* Capacity Pills */}
-            <div className="flex flex-col gap-3">
-              <Label className="font-medium text-foreground">Kapacitet</Label>
-              <div className="flex flex-wrap gap-2">
-                {capacityOptions.map((capacity) => (
-                  <button
-                    key={capacity}
-                    type="button"
-                    onClick={() => setFormData({ ...formData, capacity })}
-                    className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
-                      formData.capacity === capacity
-                        ? 'bg-accent text-accent-foreground'
-                        : 'border border-border bg-background text-foreground hover:border-accent'
-                    }`}
-                  >
-                    {capacity}
-                  </button>
-                ))}
+              {/* Submit */}
+              <div className="border-t border-[#E8E4DF] px-8 py-6 mt-auto">
+                <Button
+                  type="submit"
+                  className="w-full bg-[#1C1917] text-[#FAFAF9] font-semibold hover:bg-[#2C2825] transition-all duration-300 py-6 text-base"
+                >
+                  Pošaljite Zahtev
+                </Button>
               </div>
-            </div>
-
-            {/* Submit Button */}
-            <Button
-              type="submit"
-              className="mt-4 w-full bg-accent text-accent-foreground hover:bg-accent/90"
-            >
-              Pošalji Zahtev
-            </Button>
-          </form>
+            </form>
+          </div>
         )}
       </SheetContent>
     </Sheet>
