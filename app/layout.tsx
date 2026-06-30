@@ -1,18 +1,19 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Inter, Playfair_Display, Geist_Mono } from 'next/font/google'
+import { Inter, Playfair_Display, Geist_Mono, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({ variable: '--font-inter', subsets: ['latin'] })
 const playfair = Playfair_Display({ variable: '--font-playfair', subsets: ['latin'] })
+const spaceGrotesk = Space_Grotesk({ variable: '--font-space-grotesk', subsets: ['latin'] })
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
-  title: 'Gurmanija | Korporativni Katering i Logistika',
-  description: 'Premium katering usluge za korporativne događaje - profesionalna logistika od manjeg sastanka do nacionalnog kongresa',
+  title: 'Vukotić Kulinarski Sistemi | Korporativni Katering',
+  description: 'Premium korporativni katering i logistički sistemi za poslovne događaje — Vukotić Kulinarski Sistemi',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: 'light',
-  themeColor: '#FAFAF9',
+  themeColor: '#FDFBF7',
 }
 
 export default function RootLayout({
@@ -44,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="sr" className={`${inter.variable} ${playfair.variable} ${geistMono.variable} bg-background`}>
+    <html lang="sr" className={`${inter.variable} ${playfair.variable} ${spaceGrotesk.variable} ${geistMono.variable} bg-background`}>
       <body className="font-sans antialiased text-foreground">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

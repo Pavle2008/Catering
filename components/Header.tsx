@@ -9,8 +9,9 @@ interface HeaderProps {
 
 const navLinks = [
   { label: 'O nama', href: '#o-nama' },
+  { label: 'Sistemi isporuke', href: '#sistemi-isporuke' },
   { label: 'Cenovnik', href: '#cenovnik' },
-  { label: 'Vesti', href: '#vesti' },
+  { label: 'Česta pitanja', href: '#faq' },
 ]
 
 export default function Header({ onOpenDrawer }: HeaderProps) {
@@ -23,12 +24,21 @@ export default function Header({ onOpenDrawer }: HeaderProps) {
   }, [])
 
   return (
-    <div className="relative min-h-[92vh] overflow-hidden bg-[#1C1917]">
-      {/* Subtle texture overlay */}
+    <div className="relative min-h-[94vh] overflow-hidden" style={{ backgroundColor: '#2B2927' }}>
+      {/* Warm grain texture overlay */}
       <div
-        className="absolute inset-0 opacity-[0.06]"
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Warm radial glow */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse 70% 60% at 60% 40%, rgba(212,140,112,0.10) 0%, transparent 70%)',
         }}
         aria-hidden="true"
       />
@@ -37,32 +47,35 @@ export default function Header({ onOpenDrawer }: HeaderProps) {
       <header
         className={`sticky top-0 z-50 w-full transition-all duration-500 ${
           scrolled
-            ? 'bg-[#1C1917]/95 backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.06)]'
+            ? 'shadow-[0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-md'
             : 'bg-transparent'
         }`}
+        style={scrolled ? { backgroundColor: 'rgba(43,41,39,0.96)' } : {}}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          {/* Logo with accent bar */}
-          <div className="flex flex-col items-start">
-            <span className="text-2xl font-heading font-bold tracking-tight text-[#FAFAF9]">
-              Gurmanija
+          {/* Logo */}
+          <div className="flex flex-col items-start gap-0.5">
+            <span className="font-heading text-xl font-bold leading-none tracking-tight text-[#FDFBF7]">
+              Vukotić
             </span>
-            <div
-              className={`h-[2px] bg-[#78716C] mt-1 transition-all duration-700 ${
-                scrolled ? 'w-10' : 'w-7'
-              }`}
-            />
+            <div className="flex items-center gap-1.5">
+              <div className="h-[2px] w-8 bg-[#D48C70]" />
+              <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#D48C70]">
+                Kulinarski Sistemi
+              </span>
+            </div>
           </div>
 
           {/* Nav links */}
-          <nav className="hidden items-center gap-8 md:flex" aria-label="Primarna navigacija">
+          <nav className="hidden items-center gap-7 md:flex" aria-label="Primarna navigacija">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="relative text-sm font-medium text-[#A8A29E] transition-colors duration-200 hover:text-[#FAFAF9] after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-[#78716C] after:transition-all after:duration-300 hover:after:w-full"
+                className="group relative text-sm font-medium text-[#A09890] transition-all duration-300 ease-in-out hover:scale-[1.04] hover:text-[#FDFBF7]"
               >
                 {link.label}
+                <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#D48C70] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </nav>
@@ -70,52 +83,56 @@ export default function Header({ onOpenDrawer }: HeaderProps) {
           {/* CTA */}
           <Button
             onClick={onOpenDrawer}
-            className="bg-[#FAFAF9] text-[#1C1917] font-semibold hover:bg-[#E8E4DF] transition-all duration-300 px-6"
+            className="font-semibold transition-all duration-300 ease-in-out hover:scale-[1.03] hover:brightness-110 px-6"
+            style={{ backgroundColor: '#D48C70', color: '#FFFFFF' }}
           >
-            Rezerviši Termin
+            Rezervišite Termin
           </Button>
         </div>
       </header>
 
       {/* Hero content */}
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-start justify-center px-6 py-28 sm:py-36">
-        <p className="mb-4 animate-fade-in-slide-up text-sm font-medium uppercase tracking-widest text-[#78716C]">
-          B2B Korporativni Katering
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-start justify-center px-6 py-24 sm:py-32">
+        <p className="mb-4 animate-fade-in-slide-up text-xs font-semibold uppercase tracking-[0.22em] text-[#D48C70]">
+          B2B Korporativni Katering · Srbija
         </p>
-        <h1 className="animate-fade-in-slide-up animation-delay-100 text-balance font-heading text-5xl font-bold leading-tight text-[#FAFAF9] sm:text-6xl lg:text-7xl max-w-3xl">
-          Logistička Rešenja za Korporativne Događaje
+        <h1 className="animate-fade-in-slide-up animation-delay-100 max-w-3xl text-balance font-heading text-5xl font-bold leading-[1.1] text-[#FDFBF7] sm:text-6xl lg:text-7xl">
+          Logistika koja Hrani Vaš Tim
         </h1>
-        <p className="mt-6 max-w-xl animate-fade-in-slide-up animation-delay-200 text-lg leading-relaxed text-[#A8A29E]">
-          Od malog sastanka do nacionalnog kongresa — naš tim skalira sa vama uz dokazano iskustvo u enterprise catering-u.
+        <p className="mt-6 max-w-xl animate-fade-in-slide-up animation-delay-200 text-lg leading-relaxed text-[#A09890]">
+          Od radnog doručka do kongresa sa 1.500 gostiju — Vukotić Kulinarski Sistemi skalira sa vašim poslovnim potrebama, bez kompromisa.
         </p>
         <div className="mt-10 flex animate-fade-in-slide-up animation-delay-300 flex-col gap-4 sm:flex-row">
           <Button
             onClick={onOpenDrawer}
             size="lg"
-            className="bg-[#FAFAF9] text-[#1C1917] font-semibold hover:bg-[#E8E4DF] transition-all duration-300 px-8 py-6 text-base"
+            className="px-8 py-6 text-base font-semibold transition-all duration-300 ease-in-out hover:scale-[1.03] hover:brightness-110"
+            style={{ backgroundColor: '#D48C70', color: '#FFFFFF' }}
           >
-            Rezerviši Termin
+            Rezervišite Termin
           </Button>
           <Button
             size="lg"
             variant="outline"
             asChild
-            className="border-white/20 text-[#D6CFC8] bg-transparent hover:bg-white/10 transition-all duration-300 px-8 py-6 text-base"
+            className="border-white/20 bg-transparent px-8 py-6 text-base transition-all duration-300 ease-in-out hover:bg-white/10 hover:scale-[1.02]"
+            style={{ color: '#D6CFC8' }}
           >
-            <a href="#cenovnik">Pogledaj Cene</a>
+            <a href="#cenovnik">Pogledajte Cenovnik</a>
           </Button>
         </div>
 
         {/* Quick stats */}
-        <div className="mt-20 flex animate-fade-in-slide-up animation-delay-500 flex-wrap gap-10 border-t border-white/10 pt-8">
+        <div className="mt-20 flex animate-fade-in-slide-up animation-delay-500 flex-wrap gap-10 border-t pt-8" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
           {[
             { value: '200+', label: 'Aktivnih klijenata' },
             { value: '15.000+', label: 'Obedjenih osoba' },
             { value: '98%', label: 'Stopa zadovoljstva' },
+            { value: '12 god.', label: 'Iskustvo' },
           ].map((stat) => (
             <div key={stat.label} className="flex flex-col gap-1">
-              <span className="text-2xl font-bold text-[#FAFAF9]">{stat.value}</span>
-              <span className="text-sm text-[#78716C]">{stat.label}</span>
+              <span className="font-mono text-2xl font-bold text-[#FDFBF7]">{stat.value}</span>
+              <span className="text-xs text-[#6B7066]">{stat.label}</span>
             </div>
           ))}
         </div>
