@@ -66,10 +66,10 @@ export default function InquiryDrawer({ open, onOpenChange }: InquiryDrawerProps
             <div className="border-b border-[#E8E4DF] px-8 py-7">
               <SheetHeader>
                 <SheetTitle className="font-heading text-2xl font-bold text-[#1C1917]">
-                  Inicirajte Sastanak
+                  Rezerviši Termin
                 </SheetTitle>
                 <SheetDescription className="text-sm leading-relaxed text-[#78716C]">
-                  Popunite formu ispod. Naš tim će vas kontaktirati u roku od 24 sata.
+                  Ostavite kontakt — javimo se u roku od 24 sata sa konkretnom ponudom.
                 </SheetDescription>
               </SheetHeader>
             </div>

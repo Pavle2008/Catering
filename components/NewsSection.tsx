@@ -1,3 +1,7 @@
+'use client'
+
+import { useInView } from '@/hooks/useInView'
+
 export const newsItems = [
   {
     id: 1,
@@ -27,7 +31,7 @@ export const newsItems = [
     excerpt:
       'Detaljno kako smo organizovali logistiku za najveću korporativnu manifestaciju u regionu.',
     fullContent:
-      'U oktobru 2024. organizovali smo katering za regionalni tehnološki kongres sa 1.500 učesnika u Beogradu. Projekat je zahtevao: 4 paralelne servisne zone, 18-členski tim, 3 rashladna transportna vozila i live kuhinja stanicu. Dostava prve ture počela je u 7:30h, sa tri uzastopna talasa servisa između 12:00h i 14:30h. Svaki obrok je bio HACCP dokumentovan. Klijent je dobio digitalni logistički izveštaj unutar 24 sata od završetka događaja. Ocena zadovoljstva: 4.9/5.',
+      'U oktobru 2024. organizovali smo katering za regionalni tehnološki kongres sa 1.500 učesnika u Beogradu. Projekat je zahtevao: 4 paralelne servisne zone, 18-članski tim, 3 rashladna transportna vozila i live kuhinja stanicu. Dostava prve ture počela je u 7:30h, sa tri uzastopna talasa servisa između 12:00h i 14:30h. Svaki obrok je bio HACCP dokumentovan. Klijent je dobio digitalni logistički izveštaj unutar 24 sata od završetka događaja. Ocena zadovoljstva: 4.9/5.',
     date: '1. Decembar 2024.',
     image: '/placeholder.svg?height=300&width=500',
     category: 'Studija slučaja',
@@ -39,15 +43,24 @@ interface NewsSectionProps {
 }
 
 export default function NewsSection({ onSelectNews }: NewsSectionProps) {
+  const [headerRef, headerInView] = useInView()
+  const [cardsRef, cardsInView] = useInView({ threshold: 0.05 })
+
   return (
     <section id="vesti" className="bg-[#FAFAF9] px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl">
+
         {/* Header */}
-        <div className="mb-12 flex flex-col gap-3 border-b border-[#E8E4DF] pb-8">
+        <div
+          ref={headerRef}
+          className={`mb-12 flex flex-col gap-3 border-b border-[#E8E4DF] pb-8 ${
+            headerInView ? 'animate-fade-in-slide-up' : 'opacity-0'
+          }`}
+        >
           <div className="flex items-center gap-3">
-            <div className="h-1.5 w-6 rounded-full bg-[#1C1917]" aria-hidden="true" />
+            <div className="h-[2px] w-6 bg-[#1C1917]" aria-hidden="true" />
             <span className="text-xs font-semibold uppercase tracking-widest text-[#78716C]">
-              Vesti i Izveštaji
+              Vesti iz Gurmanije
             </span>
           </div>
           <h2 className="font-heading text-3xl font-bold text-[#1C1917] sm:text-4xl">
@@ -59,12 +72,18 @@ export default function NewsSection({ onSelectNews }: NewsSectionProps) {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {newsItems.map((item) => (
+        <div
+          ref={cardsRef}
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {newsItems.map((item, idx) => (
             <button
               key={item.id}
               onClick={() => onSelectNews(item.id)}
-              className="group flex flex-col overflow-hidden rounded-xl border border-[#E8E4DF] bg-white text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+              style={{ animationDelay: `${idx * 120}ms` }}
+              className={`group flex flex-col overflow-hidden rounded-2xl border border-[#E8E4DF] bg-white text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+                cardsInView ? 'animate-fade-in-slide-up' : 'opacity-0'
+              }`}
             >
               <div className="overflow-hidden">
                 <img

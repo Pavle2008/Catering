@@ -2,12 +2,11 @@
 
 import { useState } from 'react'
 import Header from '@/components/Header'
-import AIAssistant from '@/components/AIAssistant'
 import EstimatorSection from '@/components/EstimatorSection'
 import MetricsRibbon from '@/components/MetricsRibbon'
 import NewsSection from '@/components/NewsSection'
 import NewsModal from '@/components/NewsModal'
-import FooterCTA from '@/components/FooterCTA'
+import Footer from '@/components/Footer'
 import InquiryDrawer from '@/components/InquiryDrawer'
 
 export default function Home() {
@@ -17,11 +16,10 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header onOpenDrawer={() => setDrawerOpen(true)} />
-      <AIAssistant />
       <EstimatorSection />
       <MetricsRibbon />
       <NewsSection onSelectNews={setSelectedNewsId} />
-      <FooterCTA />
+      <Footer />
       <InquiryDrawer open={drawerOpen} onOpenChange={setDrawerOpen} />
       <NewsModal newsId={selectedNewsId} onClose={() => setSelectedNewsId(null)} />
     </main>
