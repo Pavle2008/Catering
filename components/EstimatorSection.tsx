@@ -83,7 +83,7 @@ export default function EstimatorSection() {
                 max={1000}
                 step={5}
                 value={[guests]}
-                onValueChange={([v]) => setGuests(v)}
+                onValueChange={(v) => setGuests(Array.isArray(v) ? v[0] : v)}
                 className="[&_[role=slider]]:bg-[#1C1917] [&_[role=slider]]:border-[#1C1917] [&_[role=slider]]:shadow-none [&>.relative>.absolute]:bg-[#1C1917]"
               />
               <div className="flex justify-between text-xs text-[#A8A29E]">
