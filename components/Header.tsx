@@ -28,10 +28,11 @@ export default function Header({ onOpenDrawer }: HeaderProps) {
       <header className="sticky top-0 z-50 w-full backdrop-blur-md border-b border-white/10 bg-[#1C1917]/70">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <span className="text-xl font-heading font-bold tracking-tight text-[#FAFAF9]">
-              Catering <span className="text-[#D6CFC8]">#1</span>
+          <div className="flex flex-col items-start gap-0">
+            <span className="text-2xl font-heading font-bold tracking-tight text-[#FAFAF9]">
+              Gurmanija
             </span>
+            <div className="h-1 w-12 bg-[#78716C] mt-1" />
           </div>
 
           {/* Nav links */}
@@ -52,7 +53,7 @@ export default function Header({ onOpenDrawer }: HeaderProps) {
             onClick={onOpenDrawer}
             className="bg-[#FAFAF9] text-[#1C1917] font-semibold hover:bg-[#E8E4DF] transition-all duration-300 px-6"
           >
-            Inicirajte Sastanak
+            Rezerviši Sastanak
           </Button>
         </div>
       </header>
@@ -74,14 +75,14 @@ export default function Header({ onOpenDrawer }: HeaderProps) {
             size="lg"
             className="bg-[#FAFAF9] text-[#1C1917] font-semibold hover:bg-[#E8E4DF] transition-all duration-300 px-8 py-6 text-base"
           >
-            Dogovorite Sastanak
+            Rezerviši Sastanak
           </Button>
           <Button
             size="lg"
             variant="outline"
             className="border-white/20 text-[#D6CFC8] bg-transparent hover:bg-white/10 transition-all duration-300 px-8 py-6 text-base"
           >
-            Upoznajte nas
+            Saznaj više
           </Button>
         </div>
 

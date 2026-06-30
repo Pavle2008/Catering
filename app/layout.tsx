@@ -11,8 +11,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Catering #1 | Korporativne Usluge Catering-a',
-  description: 'Logistička rešenja za korporativne dogadjaje - od malog sastanka do nacionalnog kongresa',
+  title: 'Gurmanija | Korporativni Katering i Logistika',
+  description: 'Premium katering usluge za korporativne događaje - profesionalna logistika od manjeg sastanka do nacionalnog kongresa',
   generator: 'v0.app',
   icons: {
     icon: [
